@@ -1,0 +1,60 @@
+diff --git a/tools/libs/light/Makefile b/tools/libs/light/Makefile
+index 3b372db54f..3424fdb61b 100644
+--- a/tools/libs/light/Makefile
++++ b/tools/libs/light/Makefile
+@@ -46,8 +46,6 @@ CFLAGS += -Wno-format-zero-length -Wmissing-declarations \
+ 	-Wno-declaration-after-statement -Wformat-nonliteral
+ CFLAGS += -I.
+ 
+-
+-
+ SRCS-$(CONFIG_X86) += libxl_cpuid.c
+ SRCS-$(CONFIG_X86) += libxl_x86.c
+ SRCS-$(CONFIG_X86) += libxl_psr.c
+@@ -198,18 +196,9 @@ $(eval $(genpath-target))
+ libxl.api-ok: check-libxl-api-rules _libxl.api-for-check
+ 	$(PERL) $^
+ 	touch $@
+-TFLAGS = $(CFLAGS filter-out -fsanitize=address, $(CFLAGS))
+-TPPFLAGS = $(CPPFLAGS filter-out  -fsanitize=address, $(CPPFLAGS))
+-APPEND_TFLAGS = $(APPEND_CFLAGS filter-out  -fsanitize=address, $(APPEND_CFLAGS))
++
+ _libxl.api-for-check: $(XEN_INCLUDE)/libxl.h $(AUTOINCS)
+-	# TFLAGS=$()
+-	TPPFLAGS=$(filter-out  -fsanitize=address, $(TPPFLAGS))
+-	APPEND_TFLAGS=$(filter-out  -fsanitize=address, $(APPEND_TFLAGS))
+-	# $(APPEND_CFLAGS) = $(filter-out -fsanitize=address, $(APPEND_CFLAGS))
+-	echo "hellooooo oooooooooooooo"
+-	# echo "$(CFLAGS)"
+-	# echo "$(CPPFLAGS)"
+-	$(CC)   $(TPPFLAGS) $(TFLAGS) $(CFLAGS_libxl.o) -c -E $< $(APPEND_TFLAGS) \
++	$(CC) $(CPPFLAGS) $(CFLAGS) $(CFLAGS_libxl.o) -c -E $< $(APPEND_CFLAGS) \
+ 		-DLIBXL_EXTERNAL_CALLERS_ONLY=LIBXL_EXTERNAL_CALLERS_ONLY \
+ 		>$@.new
+ 	mv -f $@.new $@
+@@ -242,22 +231,20 @@ _libxl_type%.h _libxl_type%_json.h _libxl_type%_private.h _libxl_type%.c: libxl_
+ 	$(call move-if-changed,__libxl_type$(stem)_json.h,_libxl_type$(stem)_json.h)
+ 	$(call move-if-changed,__libxl_type$(stem).c,_libxl_type$(stem).c)
+ 
+-
+ $(XEN_INCLUDE)/_%.h: _%.h
+ 	$(call move-if-changed,_$*.h,$(XEN_INCLUDE)/_$*.h)
+ 
+ libxenlight_test.so: $(PIC_OBJS) $(LIBXL_TEST_OBJS)
+ 	$(CC) $(LDFLAGS) -Wl,$(SONAME_LDFLAG) -Wl,libxenlight.so.$(MAJOR) $(SHLIB_LDFLAGS) -o $@ $^ $(LDUSELIBS) $(APPEND_LDFLAGS)
+ 
+-
+ test_%: test_%.o test_common.o libxenlight_test.so
+-	$(CC) $(LDFLAGS) -fsanitize=address -o $@ $^ $(filter-out %libxenlight.so, $(LDLIBS_libxenlight)) $(LDLIBS_libxentoollog) $(LDLIBS_libxentoolcore) -lyajl $(APPEND_LDFLAGS)
++	$(CC) $(LDFLAGS) -o $@ $^ $(filter-out %libxenlight.so, $(LDLIBS_libxenlight)) $(LDLIBS_libxentoollog) $(LDLIBS_libxentoolcore) -lyajl $(APPEND_LDFLAGS)
+ 
+ libxl-save-helper: $(SAVE_HELPER_OBJS) libxenlight.so
+-	$(CC) $(LDFLAGS) -fsanitize=address -o $@ $(SAVE_HELPER_OBJS) $(LDLIBS_libxentoollog) $(LDLIBS_libxenctrl) $(LDLIBS_libxenguest) $(LDLIBS_libxentoolcore) $(APPEND_LDFLAGS)
++	$(CC) $(LDFLAGS) -o $@ $(SAVE_HELPER_OBJS) $(LDLIBS_libxentoollog) $(LDLIBS_libxenctrl) $(LDLIBS_libxenguest) $(LDLIBS_libxentoolcore) $(APPEND_LDFLAGS)
+ 
+ testidl: testidl.o libxenlight.so
+-	$(CC) $(LDFLAGS) -fsanitize=address -o $@ testidl.o $(LDLIBS_libxenlight) $(LDLIBS_libxentoollog) $(LDLIBS_libxentoolcore) $(APPEND_LDFLAGS)
++	$(CC) $(LDFLAGS) -o $@ testidl.o $(LDLIBS_libxenlight) $(LDLIBS_libxentoollog) $(LDLIBS_libxentoolcore) $(APPEND_LDFLAGS)
+ 
+ install: installlocal $(LIBHEADERS)
+ 

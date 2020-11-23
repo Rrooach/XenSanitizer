@@ -1,0 +1,13 @@
+diff --git a/tools/firmware/rombios/32bit/Makefile b/tools/firmware/rombios/32bit/Makefile
+index 24dbd720c2..c058c71551 100644
+--- a/tools/firmware/rombios/32bit/Makefile
++++ b/tools/firmware/rombios/32bit/Makefile
+@@ -6,7 +6,7 @@ TARGET = 32bitbios_flat.h
+ CFLAGS += $(CFLAGS_xeninclude) -I.. -I../../../libacpi
+ $(call cc-option-add,CFLAGS,CC,-fno-pic)
+ $(call cc-option-add,CFLAGS,CC,-fno-PIE)
+-$(CFLAGS) := $(filter-out -fsanitize=address, $(CFLAGS))
++
+ SUBDIRS = tcgbios
+ 
+ .PHONY: all

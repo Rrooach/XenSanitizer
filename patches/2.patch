@@ -1,0 +1,18 @@
+diff --git a/tools/Makefile b/tools/Makefile
+index 75ab323e7f..ed71474421 100644
+--- a/tools/Makefile
++++ b/tools/Makefile
+@@ -92,11 +92,11 @@ IOEMU_CONFIGURE_CROSS ?= --cross-prefix=$(CROSS_COMPILE) \
+ endif
+ 
+ ifeq ($(XEN_TOOLS_RPATH),y)
+-QEMU_UPSTREAM_RPATH :=  -Wl,-rpath,$(LIBEXEC_LIB):$(libdir)
++QEMU_UPSTREAM_RPATH := -Wl,-rpath,$(LIBEXEC_LIB):$(libdir)
+ IOEMU_EXTRA_LDFLAGS := --extra-ldflags="-Wl,-rpath,$(libdir)"
+ else
+ QEMU_UPSTREAM_RPATH := -Wl,-rpath,$(LIBEXEC_LIB)
+-IOEMU_EXTRA_LDFLAGS := #-fsanitize=address
++IOEMU_EXTRA_LDFLAGS :=
+ endif
+ 
+ QEMU_ROOT := $(shell if [ -d "$(QEMU_TRADITIONAL_LOC)" ]; then echo "$(QEMU_TRADITIONAL_LOC)"; else echo .; fi)

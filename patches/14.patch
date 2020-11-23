@@ -1,0 +1,13 @@
+diff --git a/tools/xentrace/Makefile b/tools/xentrace/Makefile
+index 12383d7129..9fb7fc96e7 100644
+--- a/tools/xentrace/Makefile
++++ b/tools/xentrace/Makefile
+@@ -8,7 +8,7 @@ CFLAGS += $(CFLAGS_libxenctrl)
+ LDLIBS += $(LDLIBS_libxenevtchn)
+ LDLIBS += $(LDLIBS_libxenctrl)
+ LDLIBS += $(ARGP_LDFLAGS)
+-LDFLAGS += -fsanitize=address
++
+ BIN      = xenalyze
+ SBIN     = xentrace xentrace_setsize
+ LIBBIN   = xenctx

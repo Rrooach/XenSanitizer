@@ -1,0 +1,43 @@
+diff --git a/Config.mk b/Config.mk
+index e5bb1c4092..259e68863d 100644
+--- a/Config.mk
++++ b/Config.mk
+@@ -32,7 +32,7 @@ CONFIG_$(XEN_OS) := y
+ SHELL     ?= /bin/sh
+ 
+ # Tools to run on system hosting the build
+-HOSTCFLAGS  = -Wall -Werror -Wstrict-prototypes -O2 -fomit-frame-pointer #-fsanitize=address
++HOSTCFLAGS  = -Wall -Werror -Wstrict-prototypes -O2 -fomit-frame-pointer
+ HOSTCFLAGS += -fno-strict-aliasing
+ 
+ DISTDIR     ?= $(XEN_ROOT)/dist
+@@ -132,8 +132,7 @@ export XEN_HAS_BUILD_ID ?= n
+ ifeq ($(call ld-ver-build-id,$(LD)),n)
+ build_id_linker :=
+ else
+-CFLAGS += -DBUILD_ID #-fsanitize=address -static-libasan 
+-$(CFLAGS) := $(filter-out -fsanitize=address, $(CFLAGS))
++CFLAGS += -DBUILD_ID
+ export XEN_HAS_BUILD_ID=y
+ build_id_linker := --build-id=sha1
+ endif
+@@ -185,17 +184,14 @@ endef
+ 
+ CFLAGS += -fno-strict-aliasing
+ 
+-CFLAGS += -std=gnu99 
++CFLAGS += -std=gnu99
+ 
+-CFLAGS += -Wall -Wstrict-prototypes #-fsanitize=address
+-$(CFLAGS) := $(filter-out -fsanitize=address, $(CFLAGS))
+-# CFLAGS += -fsanitize=addres
++CFLAGS += -Wall -Wstrict-prototypes
+ 
+ $(call cc-option-add,HOSTCFLAGS,HOSTCC,-Wdeclaration-after-statement)
+ $(call cc-option-add,CFLAGS,CC,-Wdeclaration-after-statement)
+ $(call cc-option-add,CFLAGS,CC,-Wno-unused-but-set-variable)
+ $(call cc-option-add,CFLAGS,CC,-Wno-unused-local-typedefs)
+-#$(call cc-option-add,CFLAGS,CC,-fsanitize=address)
+ 
+ LDFLAGS += $(foreach i, $(EXTRA_LIB), -L$(i)) 
+ CFLAGS += $(foreach i, $(EXTRA_INCLUDES), -I$(i))

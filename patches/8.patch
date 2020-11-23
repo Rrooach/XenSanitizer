@@ -1,0 +1,13 @@
+diff --git a/tools/flask/utils/Makefile b/tools/flask/utils/Makefile
+index 11e8398126..ae87102144 100644
+--- a/tools/flask/utils/Makefile
++++ b/tools/flask/utils/Makefile
+@@ -11,7 +11,7 @@ TESTENV  = XENSTORED_ROOTDIR=$(TESTDIR) XENSTORED_RUNDIR=$(TESTDIR)
+ CLIENTS := flask-loadpolicy flask-setenforce flask-getenforce flask-label-pci flask-get-bool flask-set-bool
+ CLIENTS_SRCS := $(patsubst flask-%,%.c,$(CLIENTS))
+ CLIENTS_OBJS := $(patsubst flask-%,%.o,$(CLIENTS))
+-LDFLAGS +=  -fsanitize=address
++
+ .PHONY: all
+ all: $(CLIENTS)
+ 

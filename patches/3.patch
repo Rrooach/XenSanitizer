@@ -1,0 +1,42 @@
+diff --git a/tools/Rules.mk b/tools/Rules.mk
+index 2502f93c08..f61da81f4a 100644
+--- a/tools/Rules.mk
++++ b/tools/Rules.mk
+@@ -9,17 +9,13 @@ include $(XEN_ROOT)/Config.mk
+ export _INSTALL := $(INSTALL)
+ INSTALL = $(XEN_ROOT)/tools/cross-install
+ 
+-
+-
+-LDFLAGS += $(PREPEND_LDFLAGS_XEN_TOOLS) 
+-LDFALGS += -fsanitize=address
++LDFLAGS += $(PREPEND_LDFLAGS_XEN_TOOLS)
+ 
+ XEN_INCLUDE        = $(XEN_ROOT)/tools/include
+ 
+ include $(XEN_ROOT)/tools/libs/uselibs.mk
+ 
+-CFLAGS_xeninclude = -I$(XEN_INCLUDE) #-fsanitize=address
+-
++CFLAGS_xeninclude = -I$(XEN_INCLUDE)
+ 
+ XENSTORE_XENSTORED ?= y
+ 
+@@ -71,7 +67,7 @@ endif
+ #
+ # CFLAGS_libfoo: Flags for compiling against libfoo. Must add the
+ #                directories containing libfoo's headers to the
+-#                inclzude path. Must recursively include
++#                include path. Must recursively include
+ #                $(CFLAGS_libbaz), to satisfy the transitive inclusion
+ #                of the headers but not $(CFLAGS_libbar) since none of
+ #                libbar's headers are required to build against
+@@ -123,7 +119,7 @@ CFLAGS += -D__XEN_INTERFACE_VERSION__=__XEN_LATEST_INTERFACE_VERSION__
+ # Get gcc to generate the dependencies for us.
+ CFLAGS += -MMD -MP -MF .$(if $(filter-out .,$(@D)),$(subst /,@,$(@D))@)$(@F).d
+ DEPS = .*.d
+-#-fsanitize=address 
++
+ ifneq ($(FILE_OFFSET_BITS),)
+ CFLAGS  += -D_FILE_OFFSET_BITS=$(FILE_OFFSET_BITS)
+ endif

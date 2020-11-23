@@ -1,0 +1,16 @@
+./tools/firmware/xen-dir/xen-root/Config.mk  
++136
+$(CFLAGS) := $(filter-out -fsanitize=address, $(CFLAGS))
++191
+$(CFLAGS) := $(filter-out -fsanitize=address, $(CFLAGS))
+
+./tools/firmware/xen-dir/xen-root/xen/Makefile 
++214
+$(CFLAGS) := $(filter-out -fsanitize=address, $(CFLAGS))
+
+./tools/firmware/xen-dir/xen-root/xen/Rules.mk
++97
+$(filter-out %.init.o $(nocov-y),$(obj-y) $(obj-bin-y) $(extra-y)): CFLAGS-y += ($(COV_FLAGS) filter-out -fsanitize=address, $(CFLAGS-y))
++132 
+$(c_flags) := $(filter-out -fsanitize=address, $(c_flags))
+$(a_flags) := $(filter-out -fsanitize=address, $(a_flags))

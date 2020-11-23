@@ -1,0 +1,13 @@
+diff --git a/tools/xcutils/Makefile b/tools/xcutils/Makefile
+index 77c28cec90..82d42624c8 100644
+--- a/tools/xcutils/Makefile
++++ b/tools/xcutils/Makefile
+@@ -14,7 +14,7 @@ include $(XEN_ROOT)/tools/Rules.mk
+ PROGRAMS = readnotes lsevtchn
+ 
+ CFLAGS += -Werror
+-LDFLAGS += -fsanitize=address
++
+ CFLAGS_readnotes.o  := $(CFLAGS_libxenevtchn) $(CFLAGS_libxenctrl) $(CFLAGS_libxenguest)
+ CFLAGS_lsevtchn.o   := $(CFLAGS_libxenevtchn) $(CFLAGS_libxenctrl)
+ 

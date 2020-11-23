@@ -1,0 +1,22 @@
+diff --git a/tools/libs/libs.mk b/tools/libs/libs.mk
+index 276fc0bf4b..b0e785b380 100644
+--- a/tools/libs/libs.mk
++++ b/tools/libs/libs.mk
+@@ -14,7 +14,7 @@ SHLIB_LDFLAGS += -Wl,--version-script=libxen$(LIBNAME).map
+ CFLAGS   += -Werror -Wmissing-prototypes
+ CFLAGS   += -I./include $(CFLAGS_xeninclude)
+ CFLAGS   += $(foreach lib, $(USELIBS_$(LIBNAME)), $(CFLAGS_libxen$(lib)))
+-$(CFLAGS) := $(filter-out -fsanitize=address, $(CFLAGS))
++
+ LDUSELIBS = $(foreach lib, $(USELIBS_$(LIBNAME)), $(LDLIBS_libxen$(lib)))
+ 
+ LIB_OBJS := $(SRCS-y:.c=.o)
+@@ -88,7 +88,7 @@ lib$(LIB_FILE_NAME).so.$(MAJOR): lib$(LIB_FILE_NAME).so.$(MAJOR).$(MINOR)
+ 	$(SYMLINK_SHLIB) $< $@
+ 
+ lib$(LIB_FILE_NAME).so.$(MAJOR).$(MINOR): $(PIC_OBJS) libxen$(LIBNAME).map
+-	$(CC) $(LDFLAGS) -fsanitize=address $(PTHREAD_LDFLAGS) -Wl,$(SONAME_LDFLAG) -Wl,lib$(LIB_FILE_NAME).so.$(MAJOR) $(SHLIB_LDFLAGS) -o $@ $(PIC_OBJS) $(LDUSELIBS) $(APPEND_LDFLAGS)
++	$(CC) $(LDFLAGS) $(PTHREAD_LDFLAGS) -Wl,$(SONAME_LDFLAG) -Wl,lib$(LIB_FILE_NAME).so.$(MAJOR) $(SHLIB_LDFLAGS) -o $@ $(PIC_OBJS) $(LDUSELIBS) $(APPEND_LDFLAGS)
+ 
+ .PHONY: install
+ install: build

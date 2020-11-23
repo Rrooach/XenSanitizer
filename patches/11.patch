@@ -1,0 +1,12 @@
+diff --git a/tools/misc/Makefile b/tools/misc/Makefile
+index 74e74b69f4..7d37f297a9 100644
+--- a/tools/misc/Makefile
++++ b/tools/misc/Makefile
+@@ -73,7 +73,6 @@ clean:
+ .PHONY: distclean
+ distclean: clean
+ 
+-LDFLAGS += -fsanitize=address
+ xen-cpuid: xen-cpuid.o
+ 	$(CC) $(LDFLAGS) -o $@ $< $(LDLIBS_libxenctrl) $(LDLIBS_libxenguest) $(APPEND_LDFLAGS)
+ 
